@@ -1,8 +1,6 @@
+A minimal forward authentication service that provides OAuth based login and authentication for the [traefik](https://traefik.io) reverse proxy.
 
-# Traefik Forward Auth [![Build Status](https://travis-ci.org/thomseddon/traefik-forward-auth.svg?branch=master)](https://travis-ci.org/thomseddon/traefik-forward-auth) [![Go Report Card](https://goreportcard.com/badge/github.com/thomseddon/traefik-forward-auth)](https://goreportcard.com/badge/github.com/thomseddon/traefik-forward-auth)
-
-A minimal forward authentication service that provides Google oauth based login and authentication for the traefik reverse proxy.
-
+This is a fork from [noelcatt's fork](https://github.com/noelcatt/traefik-forward-auth) to modernize the service a bit. The differences are listed [here](#differences-from-noelcatts-fork)
 
 ## Why?
 
@@ -19,25 +17,24 @@ See the (examples) directory for example docker compose and traefik configuratio
 
 The following configuration is supported:
 
-
-|Flag                   |Type  |Description|
-|-----------------------|------|-----------|
-|-client-id|string|*Google Client ID (required)|
-|-client-secret|string|*Google Client Secret (required)|
-|-secret|string|*Secret used for signing (required)|
-|-config|string|Path to config file|
-|-auth-host|string|Central auth login (see below)|
-|-cookie-domains|string|Comma separated list of cookie domains (see below)|
-|-cookie-name|string|Cookie Name (default "_forward_auth")|
-|-cookie-secure|bool|Use secure cookies (default true)|
-|-csrf-cookie-name|string|CSRF Cookie Name (default "_forward_auth_csrf")|
-|-domain|string|Comma separated list of email domains to allow|
-|-whitelist|string|Comma separated list of email addresses to allow|
-|-lifetime|int|Session length in seconds (default 43200)|
-|-url-path|string|Callback URL (default "_oauth")|
-|-prompt|string|Space separated list of [OpenID prompt options](https://developers.google.com/identity/protocols/OpenIDConnect#prompt)|
-|-log-level|string|Log level: trace, debug, info, warn, error, fatal, panic (default "warn")|
-|-log-format|string|Log format: text, json, pretty (default "text")|
+| Flag              | Type   | Description                                                                                                            |
+| ----------------- | ------ | ---------------------------------------------------------------------------------------------------------------------- |
+| -client-id        | string | \*Google Client ID (required)                                                                                          |
+| -client-secret    | string | \*Google Client Secret (required)                                                                                      |
+| -secret           | string | \*Secret used for signing (required)                                                                                   |
+| -config           | string | Path to config file                                                                                                    |
+| -auth-host        | string | Central auth login (see below)                                                                                         |
+| -cookie-domains   | string | Comma separated list of cookie domains (see below)                                                                     |
+| -cookie-name      | string | Cookie Name (default "\_forward_auth")                                                                                 |
+| -cookie-secure    | bool   | Use secure cookies (default true)                                                                                      |
+| -csrf-cookie-name | string | CSRF Cookie Name (default "\_forward_auth_csrf")                                                                       |
+| -domain           | string | Comma separated list of email domains to allow                                                                         |
+| -whitelist        | string | Comma separated list of email addresses to allow                                                                       |
+| -lifetime         | int    | Session length in seconds (default 43200)                                                                              |
+| -url-path         | string | Callback URL (default "\_oauth")                                                                                       |
+| -prompt           | string | Space separated list of [OpenID prompt options](https://developers.google.com/identity/protocols/OpenIDConnect#prompt) |
+| -log-level        | string | Log level: trace, debug, info, warn, error, fatal, panic (default "warn")                                              |
+| -log-format       | string | Log format: text, json, pretty (default "text")                                                                        |
 
 Configuration can also be supplied as environment variables (use upper case and swap `-`'s for `_`'s e.g. `-client-id` becomes `CLIENT_ID`)
 
@@ -59,8 +56,8 @@ The authenticated user is set in the `X-Forwarded-User` header, to pass this on 
 
 You can restrict who can login with the following parameters:
 
-* `-domain` - Use this to limit logins to a specific domain, e.g. test.com only
-* `-whitelist` - Use this to only allow specific users to login e.g. thom@test.com only
+- `-domain` - Use this to limit logins to a specific domain, e.g. test.com only
+- `-whitelist` - Use this to only allow specific users to login e.g. thom@test.com only
 
 Note, if you pass `whitelist` then only this is checked and `domain` is effectively ignored.
 
@@ -105,10 +102,12 @@ Two criteria must be met for an `auth-host` to be used:
 1. Request matches given `cookie-domain`
 2. `auth-host` is also subdomain of same `cookie-domain`
 
-## Copyright
-
-2018 Thom Seddon
-
 ## License
 
 [MIT](https://github.com/thomseddon/traefik-forward-auth/blob/master/LICENSE.md)
+
+## Differences from noelcatt's fork
+
+- Upgrade to Go 1.19
+- Multiarch Docker image - Use the service on a Raspberry Pi!
+- Switch from Travis CI to GitHub Actions
