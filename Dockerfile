@@ -1,14 +1,12 @@
-FROM golang:1.10-alpine as builder
+FROM golang:1.19-alpine as builder
 
 # Setup
 RUN mkdir /app
 WORKDIR /app
 
-# Add libraries
-RUN apk add --no-cache git && \
-  go get "github.com/namsral/flag" && \
-  go get "github.com/sirupsen/logrus" && \
-  apk del git
+# Copy go dep definitions first for better caching
+COPY go.mod go.sum /app/
+RUN go get ./...
 
 # Copy & build
 ADD . /app/
