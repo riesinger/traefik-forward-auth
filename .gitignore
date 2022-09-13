@@ -1,0 +1,5 @@
+# The built binary
+traefik-forward-auth
+
+# OS files
+.DS_Store
