@@ -38,7 +38,7 @@ jobs:
       # https://github.com/sigstore/cosign-installer
       - name: Install cosign
         if: github.event_name != 'pull_request'
-        uses: sigstore/cosign-installer@b3413d484cc23cf8778c3d2aa361568d4eb54679
+        uses: sigstore/cosign-installer@115e4ce455e573aa6e9ba51e8d040ddd5c1378af
         with:
           cosign-release: 'v1.9.0'
       # Login against a Docker registry except on PR
